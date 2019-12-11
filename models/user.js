@@ -9,10 +9,7 @@ const userSchema = new Schema({
   pictureUrl: String,
   expert: String,
   points: Number,
-  // myproblems: [{type: Schema.Types.ObjectId, ref: 'Quote'}],
-  // myanswers: [{type: Schema.Types.ObjectId, ref: 'Quote'}],
-  // mysolvedproblems: [{type: Schema.Types.ObjectId, ref: 'Quote'}], 
-  myproblems: [],
+  myproblems: [{type: Schema.Types.ObjectId, ref: 'Problem'}],
   myanswers: [],
   mysolvedproblems: [], 
 
