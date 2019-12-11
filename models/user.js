@@ -2,8 +2,20 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+  
   username: String,
   password: String,
+  email: String,
+  pictureUrl: String,
+  expert: String,
+  points: Number,
+  // myproblems: [{type: Schema.Types.ObjectId, ref: 'Quote'}],
+  // myanswers: [{type: Schema.Types.ObjectId, ref: 'Quote'}],
+  // mysolvedproblems: [{type: Schema.Types.ObjectId, ref: 'Quote'}], 
+  myproblems: [],
+  myanswers: [],
+  mysolvedproblems: [], 
+
 }, {
   timestamps: {
     createdAt: 'created_at',
