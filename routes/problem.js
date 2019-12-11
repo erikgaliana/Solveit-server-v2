@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const User = require('../models/user');
 const Problem = require('../models/problem');
+const Answer = require('../models/answer');
 
 
 
@@ -45,7 +46,7 @@ const {
 //     },
 //   );
 
-// POST '/problems'      => to create a new task
+// POST '/problems'      => to create a new problem
 router.post('/',isLoggedIn, (req, res, next) => {
     const { text, pic,category,authorID } = req.body;
     
@@ -63,5 +64,26 @@ router.post('/',isLoggedIn, (req, res, next) => {
       });
   });
 
+
+  // PUT '/problems/update/:id''    => to update a specific problem
+ router.put('/update/:id',isLoggedIn, (req, res, next) => {
+    const { id } = req.params;
+    const { text, category } = req.body;
+  
+  
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(500).json({ message: 'Specified problem id is invalid' });
+      return;
+    }
+    console.log('inside update');
+    Problem.findByIdAndUpdate( id, {text, category} )
+      .then( () => {
+        res.status(201).json({ message: 'problem updated '});
+      })
+      .catch( (err) => {
+        res.status(400).json(err);
+      });
+  
+  })
 
   module.exports = router;

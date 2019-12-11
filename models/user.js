@@ -10,8 +10,8 @@ const userSchema = new Schema({
   expert: String,
   points: Number,
   myproblems: [{type: Schema.Types.ObjectId, ref: 'Problem'}],
-  myanswers: [],
-  mysolvedproblems: [], 
+  problemstosolve: [{type: Schema.Types.ObjectId, ref: 'Problem'}],
+  mysolvedproblems: [{type: Schema.Types.ObjectId, ref: 'Problem'}], 
 
 }, {
   timestamps: {

@@ -11,6 +11,7 @@ require('dotenv').config();
 
 const auth = require('./routes/auth');
 const problem = require('./routes/problem');
+const answer= require('./routes/answer');
 
 
 // MONGOOSE CONNECTION
@@ -70,6 +71,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ROUTER MIDDLEWARE
 app.use('/auth', auth);
 app.use('/problems', problem);
+app.use('/answers', answer);
 
 
 // ERROR HANDLING
