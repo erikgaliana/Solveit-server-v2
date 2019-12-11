@@ -4,6 +4,7 @@ const createError = require('http-errors');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const User = require('../models/user');
+const Problem = require('../models/problem');
 
 // HELPER FUNCTIONS
 const {
@@ -88,5 +89,36 @@ router.get('/private', isLoggedIn, (req, res, next) => {
     .status(200) // OK
     .json({ message: 'Test - User is logged in' });
 });
+
+router.get('/problems', isLoggedIn, (req, res, next) => {
+  res
+    .status(200) // OK
+    .json({ message: 'Test - inside problems' });
+});
+
+//  
+router.post(
+  '/problems',
+ isLoggedIn,
+  async (req, res, next) => {
+    console.log( "inside post problems");
+    const { text, pic,category} = req.body;
+     
+     
+    try {
+      
+        const newProblem = await Problem.create({ text, pic, category});
+        
+        res
+          .status(200) //  OK
+          .json(newProblem);
+      }
+     catch (error) {
+      next(error);
+    }
+  },
+);
+
+
 
 module.exports = router;
