@@ -8,9 +8,6 @@ const Problem = require('../models/problem');
 
 
 
- 
-
-
 // HELPER FUNCTIONS
 const {
     isLoggedIn,
@@ -51,11 +48,10 @@ const {
 // POST '/problems'      => to create a new task
 router.post('/',isLoggedIn, (req, res, next) => {
     const { text, pic,category,authorID } = req.body;
-    console.log(req.body);
+    
     Problem.create({ text, pic,category, author: authorID })
       .then( (newProblem) => {
-        console.log( "inside create");
-        console.log("problem",newProblem);
+       
         return User.findByIdAndUpdate(authorID, { $push: { myproblems: newProblem._id} }, { new: true })
     })
       .then( (updatedUser) => {
