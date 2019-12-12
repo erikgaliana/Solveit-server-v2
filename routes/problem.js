@@ -9,15 +9,10 @@ const Answer = require('../models/answer');
 
 
 
-// HELPER FUNCTIONS
-const {
-    isLoggedIn,
-    isNotLoggedIn,
-    validationLoggin,
-  } = require('../helpers/middlewares');
 
 
-  router.get('/', isLoggedIn, (req, res, next) => {
+
+  router.get('/', (req, res, next) => {
     res
       .status(200) // OK
       .json({ message: 'Test - inside problems' });
@@ -25,8 +20,8 @@ const {
   
   //  
 //   router.post(
-//     '/',
-//    isLoggedIn,
+//     '/'
+//   ,
 //     async (req, res, next) => {
 //       console.log( "inside post problems");
 //       const { text, pic,category,authorID} = req.body;
@@ -47,7 +42,7 @@ const {
 //   );
 
 // POST '/problems'      => to create a new problem
-router.post('/',isLoggedIn, (req, res, next) => {
+router.post('/', (req, res, next) => {
     const { text, pic,category,authorID } = req.body;
     
     Problem.create({ text, pic,category, author: authorID })
@@ -66,7 +61,7 @@ router.post('/',isLoggedIn, (req, res, next) => {
 
 
   // PUT '/problems/update/:id''    => to update a specific problem
- router.put('/update/:id',isLoggedIn, (req, res, next) => {
+ router.put('/update/:id', (req, res, next) => {
     const { id } = req.params;
     const { text, category } = req.body;
   
