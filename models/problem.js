@@ -7,7 +7,7 @@ const problemSchema = new Schema ({
     pic:String,
     category:String,
     author:{ type: Schema.Types.ObjectId, ref: 'User'},
-    solution:{ type: Schema.Types.ObjectId, ref: 'Answer'},
+    solution:[{ type: Schema.Types.ObjectId, ref: 'Answer'}],
     problemanswers: [{ type: Schema.Types.ObjectId, ref: 'Answer'}]
 
     

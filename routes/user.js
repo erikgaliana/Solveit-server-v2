@@ -39,33 +39,11 @@ const Answer = require('../models/answer');
     console.log('id',id);
     
     const userId = req.session.currentUser._id;
-    //const { text, category } = req.body;
-  
-  
+   
     // if (!mongoose.Types.ObjectId.isValid(id)) {
     //   res.status(500).json({ message: 'Specified problem id is invalid' });
     //   return;
     // }
-
-    // console.log('inside update');
-    // User.findByIdAndUpdate( id, {text, category} )
-    //   .then( () => {
-    //     res.status(201).json({ message: 'problem updated '});
-    //   })
-    //   .catch( (err) => {
-    //     res.status(400).json(err);
-    //   });
-    // console.log('problem id', id);
-    // console.log('user Id', userId);
-    
-
-    // User.findByIdAndUpdate(userId, { $push: { mysolvedproblems: id} }, { new: true })
-    //     .then( (updatedUser) => {
-    //             res.status(201).json(updatedUser);
-    //        })
-    //     .catch( (err) => {
-    //     res.status(400).json(err);
-    //     })
 
     User.findByIdAndUpdate(userId, { $push: { mysolvedproblems: id} }, { new: true })
         .then( () => {

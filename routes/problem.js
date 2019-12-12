@@ -9,75 +9,51 @@ const Answer = require('../models/answer');
 
 
 
-
-
-
-  router.get('/', (req, res, next) => {
+router.get('/', (req, res, next) => {
     res
       .status(200) // OK
       .json({ message: 'Test - inside problems' });
   });
   
-  //  
-//   router.post(
-//     '/'
-//   ,
-//     async (req, res, next) => {
-//       console.log( "inside post problems");
-//       const { text, pic,category,authorID} = req.body;
-       
-       
-//       try {
-        
-//           const newProblem = await Problem.create({ text, pic, category});
-          
-//           res
-//             .status(200) //  OK
-//             .json(newProblem);
-//         }
-//        catch (error) {
-//         next(error);
-//       }
-//     },
-//   );
-
-// POST '/problems'      => to create a new problem
-router.post('/', (req, res, next) => {
-    const { text, pic,category,authorID } = req.body;
-    
-    Problem.create({ text, pic,category, author: authorID })
-      .then( (newProblem) => {
-       
-        return User.findByIdAndUpdate(authorID, { $push: { myproblems: newProblem._id} }, { new: true })
-    })
-      .then( (updatedUser) => {
-        res.status(201).json(updatedUser);
-      })
   
-      .catch( (err) => {
-        res.status(400).json(err);
-      });
+router.post('/',async (req, res, next) => {
+    const { text, pic,category} = req.body;
+    const authorID = req.session.currentUser._id;
+ try {  
+   const newProblem = await Problem.create({ text, pic,category, author: authorID })
+      
+   const updatedUser= await User.findByIdAndUpdate(authorID, { $push: { myproblems: newProblem._id} }, { new: true })
+   
+      
+        res.status(201).json(updatedUser);
+     
+      
+    }catch (err) {
+        next(err)
+      }
+
+
+
   });
 
 
   // PUT '/problems/update/:id''    => to update a specific problem
- router.put('/update/:id', (req, res, next) => {
+ router.put('/update/:id',async (req, res, next) => {
     const { id } = req.params;
-    const { text, category } = req.body;
-  
+    const { text} = req.body;
+  try {
   
     if (!mongoose.Types.ObjectId.isValid(id)) {
       res.status(500).json({ message: 'Specified problem id is invalid' });
       return;
     }
-    console.log('inside update');
-    Problem.findByIdAndUpdate( id, {text, category} )
-      .then( () => {
-        res.status(201).json({ message: 'problem updated '});
-      })
-      .catch( (err) => {
-        res.status(400).json(err);
-      });
+    const updatedproblem = await Problem.findByIdAndUpdate( id, { text } , {new:true});
+    
+        res.status(201).json(updatedproblem);
+    
+    } catch (err) {
+       next(err);
+    }
   
   })
 
