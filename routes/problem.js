@@ -22,6 +22,10 @@ router.post('/',async (req, res, next) => {
  try {  
    const newProblem = await Problem.create({ text, pic,category, author: authorID })
       
+// Book.update({_id: req.query.book_id}, { $set: {title, author, description, rating }})
+
+    const updateallusers = await User.update({expert: "babies"} , {$push: { problemstosolve: newProblem._id} } )
+
    const updatedUser= await User.findByIdAndUpdate(authorID, { $push: { myproblems: newProblem._id} }, { new: true })
    
       
