@@ -25,8 +25,9 @@ const {
 // POST AN ANSWER
 
 router.post('/', isLoggedIn, ( req,res,next)=>{
-    const { text, pic, category, author, problemtosolve } = req.body;
-    console.log("inside post");
+    const { text, pic, category, problemtosolve } = req.body;
+    const author = req.session.currentUser._id;
+    
     Answer.create({ text, pic, category, author, problemtosolve })
    
         .then(( newAnswer) => {

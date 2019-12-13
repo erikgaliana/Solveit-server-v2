@@ -44,7 +44,7 @@ router.post('/',async (req, res, next) => {
   // PUT '/problems/update/:id''    => to update a specific problem
  router.put('/update/:id',async (req, res, next) => {
     const { id } = req.params;
-    const { solution} = req.body;
+    const { solution, answerauthorId} = req.body;
   try {
   
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -52,6 +52,7 @@ router.post('/',async (req, res, next) => {
       return;
     }
     // const updatedproblem = await Problem.findByIdAndUpdate( id, { text } , {new:true});
+    const updatedanswerauthor= await User.findByIdAndUpdate(answerauthorId, { $pull: { problemstosolve: id} }, { new: true })
     const updatedproblem = await Problem.findByIdAndUpdate( id,{ $push: { solution: solution} } , {new:true});
         res.status(201).json(updatedproblem);
     
