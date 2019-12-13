@@ -25,7 +25,7 @@ router.post('/',async (req, res, next) => {
 // Book.update({_id: req.query.book_id}, { $set: {title, author, description, rating }})
 
     const updateallusers = await User.updateMany({expert: category} , {$push: { problemstosolve: newProblem._id} } )
-
+    const updatedUser2= await User.findByIdAndUpdate(authorID, { $pull: { problemstosolve: newProblem._id} }, { new: true })
    const updatedUser= await User.findByIdAndUpdate(authorID, { $push: { myproblems: newProblem._id} }, { new: true })
    
       
@@ -44,15 +44,15 @@ router.post('/',async (req, res, next) => {
   // PUT '/problems/update/:id''    => to update a specific problem
  router.put('/update/:id',async (req, res, next) => {
     const { id } = req.params;
-    const { text} = req.body;
+    const { solution} = req.body;
   try {
   
     if (!mongoose.Types.ObjectId.isValid(id)) {
       res.status(500).json({ message: 'Specified problem id is invalid' });
       return;
     }
-    const updatedproblem = await Problem.findByIdAndUpdate( id, { text } , {new:true});
-    
+    // const updatedproblem = await Problem.findByIdAndUpdate( id, { text } , {new:true});
+    const updatedproblem = await Problem.findByIdAndUpdate( id,{ $push: { solution: solution} } , {new:true});
         res.status(201).json(updatedproblem);
     
     } catch (err) {
