@@ -17,8 +17,10 @@ const Answer = require('../models/answer');
 
 
   router.get('/:id', (req,res,next) => {
-    const userId = req.session.currentUser._id;
-    User.findById({_id: userId})
+    console.log( "inside get");
+    const { id } = req.params;
+   
+    User.findById(id)
         //.populate('myproblems')
         .populate({path: 'myproblems',populate: { path: 'problemanswers' , populate:{ path : 'author'} } })
         .populate({path: 'problemstosolve',populate: { path: 'problemanswers', populate:{ path : 'author'} } })
