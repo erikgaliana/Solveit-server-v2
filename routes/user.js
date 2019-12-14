@@ -23,7 +23,7 @@ const Answer = require('../models/answer');
     User.findById(id)
         //.populate('myproblems')
         .populate({path: 'myproblems',populate: { path: 'problemanswers' , populate:{ path : 'author'} } })
-        .populate({path: 'problemstosolve',populate: { path: 'problemanswers', populate:{ path : 'author'} } })
+        .populate({path: 'problemstosolve',populate:  'author' })
         .populate({path: 'mysolvedproblems',populate: { path: 'problemanswers' , populate:{ path : 'author'} } })
         .then((user) => { 
 
