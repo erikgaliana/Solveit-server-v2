@@ -34,7 +34,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: [process.env.PUBLIC_DOMAIN],
+    origin: [process.env.PUBLIC_DOMAIN,'https://solve-it-app.herokuapp.com'],
   }),
 );
 // app.use((req, res, next) => {
@@ -74,6 +74,13 @@ app.use('/auth', auth);
 app.use('/problems', problem);
 app.use('/answers', answer);
 app.use('/users', user);
+
+
+// ROUTE FOR SERVING REACT APP (index.html)
+app.use((req, res, next) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 
 // ERROR HANDLING
