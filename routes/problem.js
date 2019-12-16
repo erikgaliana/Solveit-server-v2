@@ -17,8 +17,8 @@ router.get('/', (req, res, next) => {
   
   
 router.post('/',async (req, res, next) => {
-    const { text, pic,category} = req.body;
-    const authorID = req.session.currentUser._id;
+    const { text, pic,category,authorID} = req.body;
+    // const authorID = req.session.currentUser._id;
  try {  
    const newProblem = await Problem.create({ text, pic,category, author: authorID })
       

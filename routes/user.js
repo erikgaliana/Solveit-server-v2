@@ -24,7 +24,8 @@ const Answer = require('../models/answer');
         //.populate('myproblems')
         .populate({path: 'myproblems',populate: { path: 'problemanswers' , populate:{ path : 'author'} } })
         .populate({path: 'problemstosolve',populate:  'author' })
-        .populate({path: 'mysolvedproblems',populate: { path: 'problemanswers' , populate:{ path : 'author'} } })
+         .populate({path: 'mysolvedproblems',populate: { path: 'solution' , populate:{ path : 'author'} } })
+        // .populate({path: 'mysolvedproblems',populate: 'solution'  })
         .then((user) => { 
 
             res.status(200).json(user);
@@ -35,12 +36,12 @@ const Answer = require('../models/answer');
 
     // PUT '/user/:id''    => to update users array
     router.put('/:id', (req, res, next) => {
-        console.log('req.params', req.params.id);
+        // console.log('req.params', req.params.id);
         
     const { id } = req.params;
-    console.log('id',id);
-    
-    const userId = req.session.currentUser._id;
+    // console.log('id',id);
+    const { userId} = req.body;
+    // const userId = req.session.currentUser._id;
    
     // if (!mongoose.Types.ObjectId.isValid(id)) {
     //   res.status(500).json({ message: 'Specified problem id is invalid' });
