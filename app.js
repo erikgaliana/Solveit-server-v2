@@ -8,6 +8,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const cors = require('cors');
 require('dotenv').config();
+const cloudinary = require('./routes/cloudinary')
 
 const auth = require('./routes/auth');
 const problem = require('./routes/problem');
@@ -74,6 +75,7 @@ app.use('/auth', auth);
 app.use('/problems', problem);
 app.use('/answers', answer);
 app.use('/users', user);
+app.use('/cloudinary',cloudinary);
 
 
 // ROUTE FOR SERVING REACT APP (index.html)

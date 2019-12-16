@@ -3,6 +3,7 @@ const router = express.Router();
 const createError = require('http-errors');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const parser = require('../config/cloudinary');
 
 const User = require('../models/user');
 const Problem = require('../models/problem');
@@ -26,10 +27,14 @@ router.post(
   '/signup',
   isNotLoggedIn,
   validationLoggin,
+  // parser.single('photo'),
   async (req, res, next) => {
     console.log(req.body);
     
-    const { username, password,email,pictureUrl,expert, points} = req.body;     
+    const { username, password,email,picture,expert, points} = req.body; 
+  
+
+    
     try {
       // projection
       const usernameExists = await User.findOne({ username }, 'username');
@@ -38,7 +43,8 @@ router.post(
       else {
         const salt = bcrypt.genSaltSync(saltRounds);
         const hashPass = bcrypt.hashSync(password, salt);
-        const newUser = await User.create({ username, password: hashPass, email, pictureUrl, expert, points});
+
+        const newUser = await User.create({ username, password: hashPass, email, pictureUrl:picture, expert, points});
         req.session.currentUser = newUser;
        
         res
