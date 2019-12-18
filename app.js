@@ -35,7 +35,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: [process.env.PUBLIC_DOMAIN,'https://solve-it-app.herokuapp.com'],
+    origin: [process.env.PUBLIC_DOMAIN,'https://solveitapp.herokuapp.com'],
   }),
 );
 // app.use((req, res, next) => {
