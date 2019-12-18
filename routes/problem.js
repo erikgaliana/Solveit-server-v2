@@ -48,19 +48,18 @@ router.delete('/delete/:id',async (req, res, next) => {
     
  try {  
  
-      
-
-
     await User.updateMany({expert: category} , {$pull: { problemstosolve: id} } )
     
-   const updatedUser= await User.findByIdAndUpdate(authorID, { $pull: { myproblems: id} }, { new: true })
+      const updatedUser= await User.findByIdAndUpdate(authorID, { $pull: { myproblems: id} }, { new: true })
+      
+      await  Answer.deleteMany({problemtosolve: id});
 
-   await Problem.findOneAndDelete(id);
+     await Problem.findOneAndDelete(id);
       
         res.status(201).json(updatedUser);
      
       
-    }catch (err) {
+      }catch (err) {
         next(err)
       }
 
