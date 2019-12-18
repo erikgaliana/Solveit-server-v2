@@ -41,6 +41,33 @@ router.post('/',async (req, res, next) => {
   });
 
 
+
+router.delete('/delete/:id',async (req, res, next) => {
+    const { text, pic,category,authorID} = req.body;
+    const { id } = req.params;
+    
+ try {  
+ 
+      
+
+
+    await User.updateMany({expert: category} , {$pull: { problemstosolve: id} } )
+    
+   const updatedUser= await User.findByIdAndUpdate(authorID, { $pull: { myproblems: id} }, { new: true })
+
+   await Problem.findOneAndDelete(id);
+      
+        res.status(201).json(updatedUser);
+     
+      
+    }catch (err) {
+        next(err)
+      }
+
+
+
+  });
+
   // PUT '/problems/update/:id''    => to update a specific problem
  router.put('/update/:id',async (req, res, next) => {
     const { id } = req.params;
