@@ -18,6 +18,7 @@ router.get('/', (req, res, next) => {
   
 router.post('/',async (req, res, next) => {
     const { text, pic,category,authorID} = req.body;
+    
     // const authorID = req.session.currentUser._id;
  try {  
    const newProblem = await Problem.create({ text, pic,category, author: authorID })
@@ -42,10 +43,15 @@ router.post('/',async (req, res, next) => {
 
 
 
-router.delete('/delete/:id',async (req, res, next) => {
-    const { text, pic,category,authorID} = req.body;
+router.put('/delete/:id',async (req, res, next) => {
+    
+    console.log(" req dot body",req.body);
+    console.log("oarams",req.params);
+    const { category,authorID} = req.body;
     const { id } = req.params;
     
+
+
  try {  
  
     await User.updateMany({expert: category} , {$pull: { problemstosolve: id} } )
