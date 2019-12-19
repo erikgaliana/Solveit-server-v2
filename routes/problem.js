@@ -45,8 +45,8 @@ router.post('/',async (req, res, next) => {
 
 router.put('/delete/:id',async (req, res, next) => {
     
-    console.log(" req dot body",req.body);
-    console.log("oarams",req.params);
+    // console.log(" req dot body",req.body);
+    // console.log("oarams",req.params);
     const { category,authorID} = req.body;
     const { id } = req.params;
     
@@ -54,7 +54,7 @@ router.put('/delete/:id',async (req, res, next) => {
 
  try {  
  
-    await User.updateMany({expert: category} , {$pull: { problemstosolve: id} } )
+      await User.updateMany({expert: category} , {$pull: { problemstosolve: id} } )
     
       const updatedUser= await User.findByIdAndUpdate(authorID, { $pull: { myproblems: id} }, { new: true })
       
@@ -76,15 +76,17 @@ router.put('/delete/:id',async (req, res, next) => {
   // PUT '/problems/update/:id''    => to update a specific problem
  router.put('/update/:id',async (req, res, next) => {
     const { id } = req.params;
-    const { solution, answerauthorId} = req.body;
+    const { solution, category} = req.body;
+    console.log("category inside serer",category);
+    console.log(" problem id",id);
   try {
   
     if (!mongoose.Types.ObjectId.isValid(id)) {
       res.status(500).json({ message: 'Specified problem id is invalid' });
       return;
     }
-    // const updatedproblem = await Problem.findByIdAndUpdate( id, { text } , {new:true});
-    const updatedanswerauthor= await User.findByIdAndUpdate(answerauthorId, { $pull: { problemstosolve: id} }, { new: true })
+    
+     await User.updateMany({expert: category} , {$pull: { problemstosolve: id} } )
     const updatedproblem = await Problem.findByIdAndUpdate( id,{ $push: { solution: solution} } , {new:true});
         res.status(201).json(updatedproblem);
     
