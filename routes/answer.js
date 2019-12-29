@@ -31,7 +31,7 @@ router.post('/', isLoggedIn, ( req,res,next)=>{
     Answer.create({ text, pic, category, author, problemtosolve })
    
         .then(( newAnswer) => {
-                console.log('inside create');
+                
                 return Problem.findByIdAndUpdate(problemtosolve,{ $push: { problemanswers: newAnswer._id} }, { new: true })
         })
         .then( (updatedUser) => {

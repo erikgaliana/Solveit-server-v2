@@ -45,8 +45,7 @@ router.post('/',async (req, res, next) => {
 
 router.put('/delete/:id',async (req, res, next) => {
     
-    // console.log(" req dot body",req.body);
-    // console.log("oarams",req.params);
+   
     const { category,authorID} = req.body;
     const { id } = req.params;
     
@@ -77,8 +76,7 @@ router.put('/delete/:id',async (req, res, next) => {
  router.put('/update/:id',async (req, res, next) => {
     const { id } = req.params;
     const { solution, category} = req.body;
-    console.log("category inside serer",category);
-    console.log(" problem id",id);
+    
   try {
   
     if (!mongoose.Types.ObjectId.isValid(id)) {

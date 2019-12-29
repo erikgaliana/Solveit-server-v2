@@ -7,7 +7,7 @@ const parser = require('../config/cloudinary')
 
 router.post('/', parser.single('photo'), 
 (req,res,next)=>{  
-  console.log("inside cloudinary route");
+  
   const image_url = req.file.secure_url
   res.status(201).json(image_url)
 })

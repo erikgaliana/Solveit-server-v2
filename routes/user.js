@@ -17,7 +17,7 @@ const Answer = require('../models/answer');
 
 
   router.get('/:id', (req,res,next) => {
-    console.log( "inside get");
+    
     const { id } = req.params;
    
     User.findById(id)
@@ -36,17 +36,17 @@ const Answer = require('../models/answer');
 
     // PUT '/user/:id''    => to update users array
     router.put('/:id', (req, res, next) => {
-        // console.log('req.params', req.params.id);
+       
         
     const { id } = req.params;
-    // console.log('id',id);
-    const { userId} = req.body;
-    // const userId = req.session.currentUser._id;
    
-    // if (!mongoose.Types.ObjectId.isValid(id)) {
-    //   res.status(500).json({ message: 'Specified problem id is invalid' });
-    //   return;
-    // }
+    const { userId} = req.body;
+   
+   
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(500).json({ message: 'Specified problem id is invalid' });
+      return;
+    }
 
     User.findByIdAndUpdate(userId, { $push: { mysolvedproblems: id} }, { new: true })
         .then( () => {

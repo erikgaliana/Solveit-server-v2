@@ -27,30 +27,33 @@ router.post(
   '/signup',
   isNotLoggedIn,
   validationLoggin,
-  // parser.single('photo'),
+ 
   async (req, res, next) => {
-    console.log(req.body);
+    
     
     const { username, password,email,picture,expert, points} = req.body; 
   
 
     
     try {
-      // projection
+      
       const usernameExists = await User.findOne({ username }, 'username');
 
       if (usernameExists) return next(createError(400));
       else {
         const salt = bcrypt.genSaltSync(saltRounds);
         const hashPass = bcrypt.hashSync(password, salt);
-
-        const newUser = await User.create({ username, password: hashPass, email, pictureUrl:picture, expert, points});
+        const empty=[];
+        
+        const problemsToSolvePosted= await Problem.find({ category : expert , solution : empty  });
+        
+        const newUser = await User.create({ username, password: hashPass, email, pictureUrl:picture, problemstosolve : problemsToSolvePosted,expert, points});
         req.session.currentUser = newUser;
        
         res
-          .status(200) //  OK
+          .status(200) 
           .json(newUser);
-      }
+      }ms
     } catch (error) {
       next(error);
     }
